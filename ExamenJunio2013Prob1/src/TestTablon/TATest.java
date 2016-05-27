@@ -41,11 +41,10 @@ public class TATest {
 		IBaseDeDatosDeAnunciantes ads = mock(IBaseDeDatosDeAnunciantes.class);
 		IBaseDeDatosDePagos pa = mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
-		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(true);
+		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(false);
 		Anuncio NOEMPRESA = new Anuncio("", "", "Alguien");
 		tablon.publicarAnuncio(NOEMPRESA, ads, pa);
-		pa.anuncioPublicado("Alguien");
-		assertEquals(tablon.anunciosPublicados(), 2);
+		assertEquals(tablon.anunciosPublicados(), 1);
 		
 	}
 
