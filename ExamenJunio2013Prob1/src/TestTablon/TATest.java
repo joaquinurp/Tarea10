@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import static org.mockito.Mockito.*;
 
-import junio2013.AnuncianteNoExisteException;
 import junio2013.Anuncio;
 import junio2013.IBaseDeDatosDeAnunciantes;
 import junio2013.IBaseDeDatosDePagos;
@@ -76,6 +75,17 @@ public class TATest {
 		tablon.buscarAnuncioPorTitulo("Prueba2");
 		assertEquals(tablon.anunciosPublicados(),Atotales);
 		
+	}
+	
+	@Test
+	public void Test6BuscarAnuncioBorrado(){
+		Anuncio comp1 = new Anuncio("x","x","LA EMPRESA");
+		tablon.publicarAnuncio(comp1, IBDAnunciantes, IBDPagos);
+		Anuncio comp2=new Anuncio("y","y","LA EMPRESA");
+		tablon.publicarAnuncio(comp2, IBDAnunciantes, IBDPagos);
+		tablon.borrarAnuncio("x", "LA EMPRESA");
+		Anuncio fantasma = tablon.buscarAnuncioPorTitulo("x") ;
+		assertNull(fantasma);
 	}
 
 }
