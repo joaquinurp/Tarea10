@@ -37,7 +37,7 @@ public class TATest {
 	}
 	
 	@Test
-	public void Test3() {
+	public void Test3AnuncioSinSaldoNoIncrementa() {
 		IBaseDeDatosDeAnunciantes ads = mock(IBaseDeDatosDeAnunciantes.class);
 		IBaseDeDatosDePagos pa = mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
@@ -46,6 +46,23 @@ public class TATest {
 		tablon.publicarAnuncio(NOEMPRESA, ads, pa);
 		assertEquals(tablon.anunciosPublicados(), 1);
 		
+	}
+	
+	
+	
+	@Test
+	public void Test4AnuncioNOEMPRESAVerificarMetodo() {
+		
+		IBaseDeDatosDeAnunciantes ads=mock(IBaseDeDatosDeAnunciantes.class);
+		IBaseDeDatosDePagos pa=mock(IBaseDeDatosDePagos.class);
+		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
+		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(true);
+		Anuncio noEmpresa=new Anuncio("","","Alguien");
+		tablon.publicarAnuncio(noEmpresa, ads, pa);
+		//Metodo a verificar
+		pa.anuncioPublicado("Pepe");
+		assertEquals(tablon.anunciosPublicados(),2);	
+	
 	}
 
 }
