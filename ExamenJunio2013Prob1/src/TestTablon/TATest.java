@@ -42,7 +42,7 @@ public class TATest {
 		IBaseDeDatosDePagos pa = mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
 		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(false);
-		Anuncio NOEMPRESA = new Anuncio("", "", "Alguien");
+		Anuncio NOEMPRESA = new Anuncio("x", "x", "Alguien");
 		tablon.publicarAnuncio(NOEMPRESA, ads, pa);
 		assertEquals(tablon.anunciosPublicados(), 1);
 		
@@ -57,12 +57,25 @@ public class TATest {
 		IBaseDeDatosDePagos pa=mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
 		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(true);
-		Anuncio noEmpresa=new Anuncio("","","Alguien");
+		Anuncio noEmpresa=new Anuncio("x","x","Alguien");
 		tablon.publicarAnuncio(noEmpresa, ads, pa);
 		//Metodo a verificar
 		pa.anuncioPublicado("Pepe");
 		assertEquals(tablon.anunciosPublicados(),2);	
 	
+	}
+	
+	@Test
+	public void Test5CrearAnuncioBuscarAnuncio() {
+		
+		Anuncio comp1 = new Anuncio("x","x","LA EMPRESA");
+		tablon.publicarAnuncio(comp1, IBDAnunciantes, IBDPagos);
+		Anuncio comp2 = new Anuncio("y","y","LA EMPRESA");
+		tablon.publicarAnuncio(comp2, IBDAnunciantes, IBDPagos);
+		int Atotales = tablon.anunciosPublicados();
+		tablon.buscarAnuncioPorTitulo("Prueba2");
+		assertEquals(tablon.anunciosPublicados(),Atotales);
+		
 	}
 
 }
