@@ -29,8 +29,9 @@ public class TATest {
 	public void Test2AnuncioLAEMPRESAComprobarAumenta() {
 		
 		Anuncio adEmpresa = new Anuncio("", "", "LA EMPRESA");
-		int anuncios = tablon.anunciosPublicados();
 		tablon.publicarAnuncio(adEmpresa, IBDAnunciantes, IBDPagos);
+		
+		int anuncios = tablon.anunciosPublicados();
 		assertEquals(anuncios+1, tablon.anunciosPublicados());
 		
 	}
@@ -38,9 +39,11 @@ public class TATest {
 	@Test
 	public void Test3AnuncioSinSaldoNoIncrementa() {
 		IBaseDeDatosDeAnunciantes ads = mock(IBaseDeDatosDeAnunciantes.class);
-		IBaseDeDatosDePagos pa = mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
+		
+		IBaseDeDatosDePagos pa = mock(IBaseDeDatosDePagos.class);
 		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(false);
+		
 		Anuncio NOEMPRESA = new Anuncio("x", "x", "Alguien");
 		tablon.publicarAnuncio(NOEMPRESA, ads, pa);
 		assertEquals(tablon.anunciosPublicados(), 1);
@@ -48,16 +51,18 @@ public class TATest {
 	}
 	
 	
-	
 	@Test
 	public void Test4AnuncioNOEMPRESAVerificarMetodo() {
 		
 		IBaseDeDatosDeAnunciantes ads=mock(IBaseDeDatosDeAnunciantes.class);
-		IBaseDeDatosDePagos pa=mock(IBaseDeDatosDePagos.class);
 		when(ads.buscarAnunciante("Alguien")).thenReturn(true);
+		
+		IBaseDeDatosDePagos pa=mock(IBaseDeDatosDePagos.class);
 		when(pa.anuncianteTieneSaldo("Alguien")).thenReturn(true);
+		
 		Anuncio noEmpresa=new Anuncio("x","x","Alguien");
 		tablon.publicarAnuncio(noEmpresa, ads, pa);
+		
 		//Metodo a verificar
 		pa.anuncioPublicado("Pepe");
 		assertEquals(tablon.anunciosPublicados(),2);	
@@ -69,8 +74,10 @@ public class TATest {
 		
 		Anuncio comp1 = new Anuncio("x","x","LA EMPRESA");
 		tablon.publicarAnuncio(comp1, IBDAnunciantes, IBDPagos);
+		
 		Anuncio comp2 = new Anuncio("y","y","LA EMPRESA");
 		tablon.publicarAnuncio(comp2, IBDAnunciantes, IBDPagos);
+		
 		int Atotales = tablon.anunciosPublicados();
 		tablon.buscarAnuncioPorTitulo("Prueba2");
 		assertEquals(tablon.anunciosPublicados(),Atotales);
@@ -79,13 +86,29 @@ public class TATest {
 	
 	@Test
 	public void Test6BuscarAnuncioBorrado(){
+		
 		Anuncio comp1 = new Anuncio("x","x","LA EMPRESA");
 		tablon.publicarAnuncio(comp1, IBDAnunciantes, IBDPagos);
+		
 		Anuncio comp2=new Anuncio("y","y","LA EMPRESA");
 		tablon.publicarAnuncio(comp2, IBDAnunciantes, IBDPagos);
+		
 		tablon.borrarAnuncio("x", "LA EMPRESA");
 		Anuncio fantasma = tablon.buscarAnuncioPorTitulo("x") ;
 		assertNull(fantasma);
+	}
+	
+	@Test
+	public void Test7PublicarAnuncioYaExistente() {
+		
+		Anuncio comp1 = new Anuncio("x", "x", "LA EMPRESA");
+		tablon.publicarAnuncio(comp1, IBDAnunciantes, IBDPagos);
+		
+		Anuncio comp2 = new Anuncio("x", "y", "LA EMPRESA");
+		tablon.publicarAnuncio(comp2, IBDAnunciantes, IBDPagos);
+		
+		//...
+		
 	}
 
 }
